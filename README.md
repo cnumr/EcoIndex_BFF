@@ -60,6 +60,20 @@ docker-compose up -d --build && docker-compose logs -f
 
 > You can now reach your Back For Front instance on [http://localhost:3001](http://localhost:3001) (regarding the `APP_PORT` you defined...)
 
+### 🔄 Update Ecoindex reference
+
+This project embeds the official [Ecoindex reference JSON](https://raw.githubusercontent.com/cnumr/ecoindex_reference/refs/heads/main/ecoindex_reference.json) to map grades (A–G) to colors.
+
+To refresh the local copy used by the service, run:
+
+```bash
+./.github/update_ecoindex_reference.sh
+```
+
+This script will download the latest `ecoindex_reference.json` from the Ecoindex reference repository into `services/ecoindex_reference.json`, which is then embedded in the Go binary.
+
+A GitHub Action (`.github/workflows/check-ecoindex-reference.yml`) checks on each pull request to `main` that `services/ecoindex_reference.json` is strictly identical to the remote reference; if the check fails, run the script above and commit the updated file.
+
 ## 🔧 Configuration
 
 ### Environment variables
