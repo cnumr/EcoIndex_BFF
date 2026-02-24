@@ -21,6 +21,21 @@ It is built in Golang and Fiber to provide great performance and be as light as 
 go mod download
 ```
 
+### Using mise (optional)
+
+If you use [`mise`](https://github.com/jdx/mise) to manage your development tools, this repository ships a `mise.toml` that pins the required tools:
+
+- `go` (Go toolchain)
+- `air` (live reload for development)
+
+From the project root, you can install and activate the tools defined in `mise.toml` with:
+
+```bash
+mise install
+```
+
+After that, you can run the usual commands (`go test ./...`, `air`, etc.) using the versions managed by `mise`.
+
 ## 🧑🏻‍💻 Usage
 
 To start the project, you first need configure your `.env` file and provide the url of the ecoindex API you want to reach by setting the environment variable `API_URL`. Default is set to `https://ecoindex.p.rapidapi.com`.
