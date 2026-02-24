@@ -21,6 +21,21 @@ It is built in Golang and Fiber to provide great performance and be as light as 
 go mod download
 ```
 
+### Using mise (optional)
+
+If you use [`mise`](https://github.com/jdx/mise) to manage your development tools, this repository ships a `mise.toml` that pins the required tools:
+
+- `go` (Go toolchain)
+- `air` (live reload for development)
+
+From the project root, you can install and activate the tools defined in `mise.toml` with:
+
+```bash
+mise install
+```
+
+After that, you can run the usual commands (`go test ./...`, `air`, etc.) using the versions managed by `mise`.
+
 ## 🧑🏻‍💻 Usage
 
 To start the project, you first need configure your `.env` file and provide the url of the ecoindex API you want to reach by setting the environment variable `API_URL`. Default is set to `https://ecoindex.p.rapidapi.com`.
@@ -59,6 +74,20 @@ docker-compose up -d --build && docker-compose logs -f
 ```
 
 > You can now reach your Back For Front instance on [http://localhost:3001](http://localhost:3001) (regarding the `APP_PORT` you defined...)
+
+### 🔄 Update Ecoindex reference
+
+This project embeds the official [Ecoindex reference JSON](https://raw.githubusercontent.com/cnumr/ecoindex_reference/refs/heads/main/ecoindex_reference.json) to map grades (A–G) to colors.
+
+To refresh the local copy used by the service, run:
+
+```bash
+./.github/update_ecoindex_reference.sh
+```
+
+This script will download the latest `ecoindex_reference.json` from the Ecoindex reference repository into `services/ecoindex_reference.json`, which is then embedded in the Go binary.
+
+A GitHub Action (`.github/workflows/check-ecoindex-reference.yml`) checks on each pull request to `main` that `services/ecoindex_reference.json` is strictly identical to the remote reference; if the check fails, run the script above and commit the updated file.
 
 ## 🔧 Configuration
 

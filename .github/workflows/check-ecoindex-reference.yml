@@ -1,0 +1,31 @@
+name: Check Ecoindex reference
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-ecoindex-reference:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download remote ecoindex_reference.json
+        run: |
+          curl -fsSL "https://raw.githubusercontent.com/cnumr/ecoindex_reference/refs/heads/main/ecoindex_reference.json" -o /tmp/ecoindex_reference.json
+
+      - name: Compare with local ecoindex_reference.json
+        run: |
+          if ! diff -u /tmp/ecoindex_reference.json services/ecoindex_reference.json; then
+            echo ""
+            echo "❌ services/ecoindex_reference.json is not in sync with the official Ecoindex reference."
+            echo "   To fix this, run the following command locally, commit the changes, and push:"
+            echo ""
+            echo "   ./.github/update_ecoindex_reference.sh"
+            echo ""
+            exit 1
+          fi
+
