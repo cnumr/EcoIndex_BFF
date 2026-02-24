@@ -1,4 +1,4 @@
-FROM golang:buster AS build
+FROM golang:1.24 AS build
 
 WORKDIR /app
 ADD ./ ./
@@ -6,7 +6,7 @@ RUN go mod download
 RUN go build -o /ecoindex-bff
 
 
-FROM gcr.io/distroless/base-debian10
+FROM gcr.io/distroless/base-debian12
 
 WORKDIR /
 COPY --from=build /ecoindex-bff /ecoindex-bff
