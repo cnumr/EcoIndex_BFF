@@ -1,6 +1,6 @@
 module github.com/cnumr/ecoindex-bff
 
-go 1.24.0
+go 1.24
 
 require (
 	github.com/go-redis/cache/v8 v8.4.4
