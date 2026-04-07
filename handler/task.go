@@ -8,7 +8,7 @@ import (
 
 func CreateTask(c *fiber.Ctx) error {
 	c.Request().Header.Set("x-rapidapi-key", config.ENV.ApiKey)
-	proxy.Do(c, config.ENV.ApiUrl+"/v1/tasks/ecoindexes")
+	proxy.Do(c, config.ENV.ApiUrl+"/v1/tasks/ecoindexes/")
 
 	return nil
 }
