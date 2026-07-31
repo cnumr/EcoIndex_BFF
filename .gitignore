@@ -2,3 +2,5 @@
 tmp
 docker-compose.override.yml
 docker-compose.yml
+compose.override.yml
+compose.yml
