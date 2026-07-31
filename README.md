@@ -13,7 +13,7 @@ It is built in Golang and Fiber to provide great performance and be as light as 
 - [Golang](https://go.dev/)
 - [Fiber](https://gofiber.io/)
 - [Air](https://github.com/cosmtrek/air) (live reload)
-- [Redis](https://redis.io/) for caching
+- [Valkey](https://valkey.io/) for caching (Redis-compatible)
 
 ## 🛠️ Install Dependencies
 
@@ -54,10 +54,10 @@ API_KEY=your-generated-api-key                     # Optional if not production 
 APP_PORT=1337
 ```
 
-You need to launch a local redis server. The simpliest way to do so is to use a docker image of redis:
+You need to launch a local Valkey server. The simplest way to do so is to use a docker image of Valkey:
 
 ```bash
-docker run -d -p 6379:6379 redis
+docker run -d -p 6379:6379 valkey/valkey:alpine
 ```
 
 Then you can launch your project simply using air command:
@@ -100,7 +100,7 @@ A GitHub Action (`.github/workflows/check-ecoindex-reference.yml`) checks on eac
 | `APP_PORT`      | The port on which the application will listen                                                                                   | `3001`                                               |
 | `APP_URL`       | The url of the application                                                                                                      | `"http://localhost:3001"`                            |
 | `BADGE_VERSION` | The version of the badge you want to use (comes from [Ecindex badge project](https://github.com/cnumr/ecoindex_badge/releases)) | `"v1"`                                               |
-| `CACHE_DSN`     | The DSN of the Redis cache                                                                                                      | `"localhost:6379"`                                   |
+| `CACHE_DSN`     | The DSN of the Valkey cache                                                                                                     | `"localhost:6379"`                                   |
 | `CACHE_ENABLED` | If you want to serve API results from cache                                                                                     | `true`                                               |
 | `CACHE_TTL`     | The time to live of the cache (in seconds)                                                                                      | `604800` (1 week)                                    |
 | `CDN_URL`       | The base url of the CDN where the badge is hosted                                                                               | `"https://cdn.jsdelivr.net/gh/cnumr/ecoindex_badge"` |
@@ -109,7 +109,7 @@ A GitHub Action (`.github/workflows/check-ecoindex-reference.yml`) checks on eac
 
 ### About caching
 
-The application uses a Redis cache to store the results of the API calls (only for `/ecoindexes*` endpoints). It is enabled by default, but you can disable it by setting the `CACHE_ENABLED` environment variable to `false`.
+The application uses a Valkey cache (Redis-compatible) to store the results of the API calls (only for `/ecoindexes*` endpoints). It is enabled by default, but you can disable it by setting the `CACHE_ENABLED` environment variable to `false`.
 
 The cache is set to expire after 1 week (604800 seconds). You can change this value by setting the `CACHE_TTL` environment variable.
 
